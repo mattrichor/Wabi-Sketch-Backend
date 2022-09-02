@@ -29,6 +29,6 @@ class Sketch(models.Model):
     sketch_data = models.JSONField()
     date = models.DateField()
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user', null=True)
+        User, on_delete=models.CASCADE, related_name='sketches', null=True)
     prompt = models.ForeignKey(
-        Prompt, on_delete=models.CASCADE, related_name='prompt', null=True)
+        Prompt, on_delete=models.CASCADE, related_name='sketches', null=True)
