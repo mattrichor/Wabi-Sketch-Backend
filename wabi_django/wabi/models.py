@@ -10,11 +10,17 @@ class User(models.Model):
     username = models.CharField(max_length=100, null=True)
     password = models.CharField(max_length=100,)
     is_active = models.BooleanField(default=False)
-    friends = models.ManyToManyField(
-        'self', related_name='friends', blank=True)
+    # friends = models.ManyToManyField(
+    #     'self', related_name='friends', blank=True)
 
     def __str__(self) -> str:
         return self.name
+
+
+class Friend(models.Model):
+    users = models.ManyToManyField(User)
+    current_user = models.ForeignKey(
+        User, related_name='friends', null=True, on_delete=models.CASCADE)
 
 
 class Prompt(models.Model):
