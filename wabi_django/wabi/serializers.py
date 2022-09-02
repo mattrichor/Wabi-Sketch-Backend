@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Prompt, Sketch, Friend
+from .models import User, Prompt, Sketch
 from dataclasses import fields
 
 
