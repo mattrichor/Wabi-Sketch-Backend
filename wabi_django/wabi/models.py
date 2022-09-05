@@ -1,14 +1,17 @@
+from crypt import methods
 from django.db import models
-
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
-class User(models.Model):
+class User(AbstractUser):
+    # pass
     name = models.CharField(max_length=100)
-    email = models.CharField(
-        verbose_name='email address', max_length=255, unique=True)
-    username = models.CharField(max_length=100, null=True)
-    password = models.CharField(max_length=100,)
+    # email = models.CharField(
+    #     verbose_name='email address', max_length=255, unique=True)
+    # username = models.CharField(max_length=100, null=True)
+    # password = models.CharField(max_length=100,)
     is_active = models.BooleanField(default=False)
     friends = models.ManyToManyField(
         'self', related_name='friends', blank=True)
