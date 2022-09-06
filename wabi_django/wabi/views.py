@@ -116,3 +116,12 @@ def login(request):
         'access': str(refresh.access_token),
         'payload': refresh.payload
     })
+
+
+@api_view(['POST'])
+def save_sketch(request):
+    print(request)
+    serializer = SketchSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return JsonResponse(serializer.data)

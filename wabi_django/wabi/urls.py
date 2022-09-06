@@ -11,6 +11,8 @@ urlpatterns = [
     path('prompts/<int:pk>', views.PromptDetails.as_view(), name='prompt_detail'),
 
     path('sketches', views.SketchList.as_view(), name='sketch_list'),
+    path('sketches/save', views.save_sketch),
+
     path('sketches/<int:pk>', views.SketchDetails.as_view(), name='sketch_detail'),
 
     path('test', views.getByPlayerName, name='rand_json'),

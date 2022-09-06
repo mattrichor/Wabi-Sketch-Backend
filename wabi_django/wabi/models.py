@@ -41,7 +41,7 @@ class Prompt(models.Model):
 
 class Sketch(models.Model):
     sketch_data = models.JSONField()
-    date = models.DateField()
+    date = models.DateField(null=True)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='sketches', null=True)
     prompt = models.ForeignKey(
