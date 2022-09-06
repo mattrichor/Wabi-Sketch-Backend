@@ -32,21 +32,21 @@ class UserDetails(generics.RetrieveUpdateDestroyAPIView):
 
 class CreateUserView(CreateAPIView):
 
-    model = User
+    model = get_user_model
     permission_classes = [
         permissions.AllowAny,
     ]
     serializer_class = UserSerializer
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-        token['username'] = user.username
-        token['email'] = user.email
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super().get_token(user)
+#         token['username'] = user.username
+#         token['email'] = user.email
 
-        return token
+#         return token
 
 
 class PromptList(generics.ListCreateAPIView):

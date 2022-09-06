@@ -7,18 +7,14 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     # pass
-    name = models.CharField(max_length=100)
+    # name = models.CharField(max_length=100)
     # email = models.CharField(
     #     verbose_name='email address', max_length=255, unique=True)
     # username = models.CharField(max_length=100, null=True)
     # password = models.CharField(max_length=100,)
-    is_active = models.BooleanField(default=False)
+    # is_active = models.BooleanField(default=)
     friends = models.ManyToManyField(
         'self', related_name='friends', blank=True)
-
-    def __str__(self) -> str:
-        return self.name
-
 
 # class Friend(models.Model):
 #     users = models.ManyToManyField(User)

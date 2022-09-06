@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    # password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
     friends = serializers.HyperlinkedRelatedField(
         view_name='friends',
         many=True,
@@ -22,9 +22,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     )
 
     def create(self, validated_data):
-        """
-        Create and return a new User instance, given the validated data.
-        """
         # make sure to user create_user method and not create
         # the later will not know how to hash the password properly
         user = User.objects.create_user(
@@ -36,7 +33,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'username',
+        fields = ('id', 'email', 'username',
                   'password', 'is_active', 'friends', 'sketches')
 
 

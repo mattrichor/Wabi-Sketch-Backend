@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wabi',
-    'accounts',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -54,13 +53,10 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        # 'rest_framework.permissions.AllowAny',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+        # 'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 SIMPLE_JWT = {
@@ -130,21 +126,21 @@ WSGI_APPLICATION = 'wabi_django.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': dj_database_url.config(conn_max_age=600)
-# }
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600)
+}
 
 AUTH_USER_MODEL = "wabi.User"
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wabi',
-        'USER': 'wabiuser',
-        'PASSWORD': 'wabi',
-                    'HOST': 'localhost'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'wabi',
+#         'USER': 'wabiuser',
+#         'PASSWORD': 'wabi',
+#                     'HOST': 'localhost'
+#     }
+# }
 
 
 # Password validation

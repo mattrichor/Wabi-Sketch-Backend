@@ -1,11 +1,11 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+# from django.contrib.auth.admin import UserAdmin
 from .models import User, Sketch, Prompt
 # Register your models here.
 
 
-# class UserAdmin(admin.ModelAdmin):
-#     model = User
+class UserAdmin(admin.ModelAdmin):
+    model = User
 
 
 admin.site.register(User, UserAdmin)
