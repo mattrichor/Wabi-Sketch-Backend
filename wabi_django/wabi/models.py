@@ -1,6 +1,5 @@
 from crypt import methods
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
@@ -14,7 +13,7 @@ class User(AbstractUser):
     # password = models.CharField(max_length=100,)
     # is_active = models.BooleanField(default=)
     friends = models.ManyToManyField(
-        'self', related_name='friends', blank=True)
+        'self', through='Friends', blank=True)
 
 # class Friend(models.Model):
 #     users = models.ManyToManyField(User)
@@ -23,6 +22,13 @@ class User(AbstractUser):
 
 #     def __str__(self):
 #         return str(self.current_user)
+
+
+class Friends(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="friends_with", null=True)
+    friend = models.ForeignKey(User,
+                               on_delete=models.CASCADE, related_name="friends_to", null=True)
 
 
 class Prompt(models.Model):

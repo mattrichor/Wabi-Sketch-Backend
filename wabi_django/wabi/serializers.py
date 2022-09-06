@@ -1,20 +1,21 @@
 from rest_framework import serializers
-from .models import Prompt, Sketch
+from .models import User, Friends, Prompt, Sketch
 from dataclasses import fields
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from django.contrib.auth import get_user_model
 
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     password = serializers.CharField(write_only=True)
-    friends = serializers.HyperlinkedRelatedField(
-        view_name='friends',
-        many=True,
-        read_only=True
-    )
+    # friends = serializers.HyperlinkedRelatedField(
+    #     view_name='friends',
+    #     many=True,
+    #     read_only=True
+    # )
     sketches = serializers.HyperlinkedRelatedField(
         view_name='sketch_detail',
         many=True,
@@ -34,7 +35,23 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'username',
-                  'password', 'is_active', 'friends', 'sketches')
+                  'password', 'is_active', 'sketches')
+
+
+class FriendsSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Friends
+        fields = ['user']
+
+
+class FriendsWithSerializer(serializers.ModelSerializer):
+    friend = UserSerializer()
+
+    class Meta:
+        model = Friends
+        field = ['friends']
 
 
 class PromptSerializer(serializers.HyperlinkedModelSerializer):
@@ -62,3 +79,13 @@ class SketchSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Sketch
         fields = ('id', 'sketch_data', 'user', 'prompt')
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        token['email'] = user.email
+
+        return token

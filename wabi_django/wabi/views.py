@@ -9,15 +9,19 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth import get_user_model
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .serializers import UserSerializer, SketchSerializer, PromptSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import UserSerializer, SketchSerializer, PromptSerializer, MyTokenObtainPairSerializer
+
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.http import JsonResponse
 # Create your views here.
 
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     permission_classes = [
-        permissions.AllowAny,  # Unauthenticated users must be able to sign up
+        permissions.AllowAny,
     ]
     serializer_class = UserSerializer
 
@@ -39,14 +43,8 @@ class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
 
 
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-#     @classmethod
-#     def get_token(cls, user):
-#         token = super().get_token(user)
-#         token['username'] = user.username
-#         token['email'] = user.email
-
-#         return token
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 
 class PromptList(generics.ListCreateAPIView):
@@ -82,6 +80,13 @@ class SketchDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
+def get_user(request, pk):
+    profile = User.objects.get(id=pk)
+    serializer = UserSerializer(profile, context={'user_id': pk})
+    return JsonResponse(serializer.data)
+
+
+@api_view(['GET'])
 def getByPlayerName(request):
     player = User.objects.filter(name__iexact='Matthew Geyer')
     if len(player) > 0:
@@ -92,5 +97,22 @@ def getByPlayerName(request):
 
 
 @api_view(['POST'])
-def loginUser(request):
-    print('hello!')
+def login(request):
+    username = request.data['username']
+    password = request.data['password']
+
+    user = User.objects.get(username=username)
+
+    if user is None:
+        raise AuthenticationFailed('User does not exist!')
+
+    if not user.check_password(password):
+        raise AuthenticationFailed('Incorrect Password!')
+
+    refresh = RefreshToken.for_user(user)
+
+    return JsonResponse({
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+        'payload': refresh.payload
+    })
