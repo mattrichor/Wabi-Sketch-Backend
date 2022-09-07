@@ -19,11 +19,11 @@ urlpatterns = [
 
     path("api/signup/", views.CreateUserView.as_view()),
 
-    path('token/obtain/', views.MyTokenObtainPairView.as_view(),
-         name='token_obtain_pair'),
+
     path('login/', views.login),
     path('user/<int:pk>/', views.get_user),
     # path('token/obtain/', jwt_views.TokenObtainPairView.as_view(),
     #      name='token_create'),  # override sjwt stock token
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('lobby/', views.lobby)
 ]

@@ -10,7 +10,7 @@ from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import UserSerializer, SketchSerializer, PromptSerializer, MyTokenObtainPairSerializer
+from .serializers import UserSerializer, SketchSerializer, PromptSerializer
 
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -41,10 +41,6 @@ class CreateUserView(CreateAPIView):
         permissions.AllowAny,
     ]
     serializer_class = UserSerializer
-
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
 
 
 class PromptList(generics.ListCreateAPIView):
@@ -125,3 +121,7 @@ def save_sketch(request):
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return JsonResponse(serializer.data)
+
+
+def lobby(request):
+    return render(request, 'http://localhost:3000/')

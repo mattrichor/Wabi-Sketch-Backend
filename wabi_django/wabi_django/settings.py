@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     # 'rest_framework_simplejwt',
     'corsheaders',
 ]
+
+ASGI_APPLICATION = 'wabi_django.asgi.application'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
