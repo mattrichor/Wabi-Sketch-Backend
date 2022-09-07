@@ -13,9 +13,12 @@ class WabiConsumer(WebsocketConsumer):
 
     def recieve(self, text_data):
         text_data_json = json.loads(text_data)
+        print(text_data_json)
         message = text_data_json['message']
-
         print('Message:', message)
+
+    def chat_message(self, event):
+        message = event['message']
 
         self.send(text_data=json.dumps({
             'type': 'chat',

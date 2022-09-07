@@ -37,7 +37,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,11 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'wabi',
     'rest_framework',
-    # 'rest_framework_simplejwt',
     'corsheaders',
+    'channels',
 ]
 
 ASGI_APPLICATION = 'wabi_django.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
+
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -127,21 +134,21 @@ WSGI_APPLICATION = 'wabi_django.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600)
-}
+# DATABASES = {
+#     'default': dj_database_url.config(conn_max_age=600)
+# }
 
 AUTH_USER_MODEL = "wabi.User"
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'wabi',
-#         'USER': 'wabiuser',
-#         'PASSWORD': 'wabi',
-#                     'HOST': 'localhost'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wabi',
+        'USER': 'wabiuser',
+        'PASSWORD': 'wabi',
+                    'HOST': 'localhost'
+    }
+}
 
 
 # Password validation

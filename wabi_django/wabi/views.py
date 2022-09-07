@@ -124,4 +124,4 @@ def save_sketch(request):
 
 
 def lobby(request):
-    return render(request, 'http://localhost:3000/')
+    return render(request, 'chat/lobby.html')

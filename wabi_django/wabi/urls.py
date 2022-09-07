@@ -22,8 +22,8 @@ urlpatterns = [
 
     path('login/', views.login),
     path('user/<int:pk>/', views.get_user),
-    # path('token/obtain/', jwt_views.TokenObtainPairView.as_view(),
-    #      name='token_create'),  # override sjwt stock token
+
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('lobby/', views.lobby)
+
+    path('lobby', views.lobby)
 ]
